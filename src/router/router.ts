@@ -15,8 +15,6 @@ const router = (request: RequestType, getResponse: GetResponseType) => {
   const route = routes[httpMetods[request.method]].find(
     (route: RouteType) => route.url === request.url
   );
-
-  console.log(request.url)
   
   return route
     ? route.callback(request, getResponse)

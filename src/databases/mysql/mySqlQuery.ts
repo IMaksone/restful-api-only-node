@@ -1,4 +1,4 @@
-import mySql from 'mySql';
+import mySql from 'mysql';
 
 import { MySqlQueryType, MySqlConnectionQueryType } from '../types';
 

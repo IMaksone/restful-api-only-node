@@ -1,4 +1,4 @@
-import mySql from 'mySql';
+import mySql from 'mysql';
 
 interface ConectionDataType {
   host: string;

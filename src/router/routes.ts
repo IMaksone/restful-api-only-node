@@ -18,19 +18,18 @@ routes.POST.push({
   url: '/templates',
   callback: (request, getResponse) => {
     let body: any = [];
+
     request
       .on('data', (chunk) => {
         body.push(chunk);
       })
       .on('end', () => {
-        console.log(Buffer.concat(body).toJSON())
         body = Buffer.concat(body);
       });
-      console.log(body)
 
     addTemplate(
       {
-        error: (error) => null,//console.log('Add template error: ', error),
+        error: (error) => console.log(error),
         success: (results, fields) => getResponse(200, results),
       },
       { value: body.value }
