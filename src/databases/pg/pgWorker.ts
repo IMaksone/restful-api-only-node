@@ -34,7 +34,7 @@ const mySqlWorker: PGWorkerType = async (connectionData, arg) => {
       break;
 
     case <PGQueryArgFunctionType>arg:
-      arg((params: PGQueryParams) => pgQuery(client, params));
+      arg((params: PGQueryParams) => pgQuery(client, params)); // arg = () => {...; client.end()} 
       break;
 
     default:
