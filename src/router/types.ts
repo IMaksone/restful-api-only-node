@@ -1,4 +1,6 @@
-import http from 'http';
+import http from "http";
+
+import { MyObject } from "../types";
 
 export interface RequestType extends http.IncomingMessage {}
 
@@ -15,22 +17,25 @@ export interface RouteType {
 }
 
 export interface RoutesType {
-  GET: RouteType[];
-  POST: RouteType[]
+  [key: string]: RouteType[];
 }
 
 export interface HttpMethodsType {
   [key: string]: HttpMethodType;
 }
 
-export type HttpMethodType = 'GET'; //| "POST" | "PUT" | "DELETE"
+export type HttpMethodType = "GET" | "POST" | "PUT" | "DELETE";
 
-export type GetResponseType = (
-  status: number,
-  end: string
-) => void;
+export type GetResponseType = (status: number, end: MyObject) => void;
 
 export type CallbackType = (
   request: RequestType,
   getResponse: GetResponseType
 ) => void;
+
+export type GetBodyType = (
+  request: RequestType,
+  callback: (body: any) => void
+) => any;
+
+export type GetHashType = (str: string) => Promise<string | void>;

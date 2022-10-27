@@ -1,13 +1,26 @@
 import { templateQueryType } from "databases/types";
 
-export const getAllTemplates: templateQueryType = () => ({
-  query: "SELECT * FROM templates",
+export const getAllUsers: templateQueryType = () => ({
+  query: "SELECT * FROM users;",
   params: [],
 });
 
-export const addTemplate: templateQueryType = (props) => ({
-  query: `INSERT INTO templates (value) VALUES (${props.value})`,
+export const addUser: templateQueryType = (props) => ({
+  //query: `INSERT INTO users (login, password, token) VALUES ('${props.login}', '${props.password}', '${props.token}');`,
+  query: `INSERT INTO users (login, password, token)
+          SELECT '${props.login}', '${props.password}', '${props.token}'
+          WHERE NOT EXISTS (SELECT 1 FROM users WHERE login='${props.login}');`,
   params: [],
 });
 
-export default { getAllTemplates, addTemplate };
+export const updateUserPassword: templateQueryType = (props) => ({
+  query: `UPDATE users SET password = '${props.password}' WHERE login = '${props.login}';`,
+  params: [],
+});
+
+export const removeUser: templateQueryType = (props) => ({
+  query: `DELETE FROM users WHERE login = '${props.login}';`,
+  params: [],
+});
+
+export default { getAllUsers, addUser, updateUserPassword };

@@ -19,9 +19,9 @@ const server = http.createServer((req: RequestType, res: ResponseType) => {
     console.error(err);
   });
 
-  router(req, (statusCode = 200, end = "") => {
+  router(req, (statusCode = 200, end = {}) => {
     res.statusCode = statusCode;
-    res.end(typeof end === "string" ? end : JSON.stringify(end));
+    res.end(JSON.stringify(end));
   });
 });
 
