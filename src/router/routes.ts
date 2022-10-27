@@ -1,39 +1,33 @@
-import { defaultRoutes as routes } from './params';
-import { getAllTemplates, addTemplate } from '../databases/mysql/rest/queries';
+import { defaultRoutes as routes } from "./params";
+import { rootTemplates, rootWorker } from "../databases";
 
 routes.GET.push({
-  url: '/templates',
+  url: "/templates",
   callback: (request, getResponse) => {
-    getAllTemplates(
-      {
-        error: (error) => console.log('Get all templates error: ', error),
-        success: (results, fields) => getResponse(200, results),
-      },
-      undefined
-    );
+    rootWorker(rootTemplates.getAllTemplates(undefined), {
+      error: (error) => console.log("Get all templates error: ", error),
+      success: (results, fields) => getResponse(200, results),
+    });
   },
 });
 
 routes.POST.push({
-  url: '/templates',
+  url: "/templates",
   callback: (request, getResponse) => {
     let body: any = [];
 
     request
-      .on('data', (chunk) => {
+      .on("data", (chunk) => {
         body.push(chunk);
       })
-      .on('end', () => {
+      .on("end", () => {
         body = Buffer.concat(body);
       });
 
-    addTemplate(
-      {
-        error: (error) => console.log(error),
-        success: (results, fields) => getResponse(200, results),
-      },
-      { value: body.value }
-    );
+    rootWorker(rootTemplates.addTemplate({ value: body.value }), {
+      error: (error) => console.log(error),
+      success: (results, fields) => getResponse(200, results),
+    });
   },
 });
 

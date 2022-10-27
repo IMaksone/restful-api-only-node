@@ -1,7 +1,6 @@
 import {
   RequestType,
   GetResponseType,
-  ResponseParamsType,
   RouteType,
 } from './types';
 

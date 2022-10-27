@@ -1,42 +1,57 @@
-import mySql from 'mysql';
+import pg from "pg";
 
-interface ConectionDataType {
+interface ConnectionData {
   host: string;
   user: string;
   database: string;
   password: string;
 }
 
-interface MySqlQueryParamType {
+export interface PGQueryParams {
   query: string;
   params: any[];
-  error: any;
-  success: any;
+  error: ErrorCallbackType;
+  success: SuccessCallbackType;
 }
 
-export type QueryType = (
-  args: {
-    error: (error: mySql.MysqlError | null) => void;
-    success: (results: any, fields: mySql.FieldInfo[] | undefined) => void;
-  },
-  params: any
-) => void;
+export type templateType = {
+  query: string;
+  params: any[];
+};
 
-export type MySqlConnectionQueryType = (
-  connection: MySqlConnectionType,
+export type templateQueryType = (props: any) => templateType;
+
+export type ErrorCallbackType =
+  | ((error: string | undefined) => void)
+  | undefined;
+
+export type SuccessCallbackType =
+  | ((results: any, fields: any[]) => void)
+  | undefined;
+
+export type CallbacksType = {
+  error: ErrorCallbackType;
+  success: SuccessCallbackType;
+};
+
+export type PGQueryType = (
+  connection: PGConnectionType,
   params: {
     query: string;
     params: any[];
-    error: (error: mySql.MysqlError | null) => void;
-    success: (results: any, fields: mySql.FieldInfo[] | undefined) => void;
-  }
+    error: ErrorCallbackType;
+    success: SuccessCallbackType;
+  },
+  end?: boolean
 ) => void;
 
-export type MySqlConnectionType = mySql.Connection;
+export type PGConnectionType = pg.Client;
 
-export type MySqlQueryParamsType = MySqlQueryParamType; //[];
+export type PGQueryArgFunctionType = (
+  callback: (params: PGQueryParams) => void
+) => void;
 
-export type MySqlQueryType = (
-  conectionData: ConectionDataType,
-  queryParams: MySqlQueryParamsType
-) => any;
+export type PGWorkerType = (
+  connectionData: ConnectionData,
+  arg: PGQueryParams | PGQueryParams[] | PGQueryArgFunctionType
+) => void;

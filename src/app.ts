@@ -1,25 +1,27 @@
-import http from 'http';
+import http from "http";
 
-import router from './router/router';
+import router from "./router/router";
 
-import { hostname, port } from './constants/constants.json';
-import { RequestType, ResponseType } from './router/types';
+import constants from "./constants";
+import { RequestType, ResponseType } from "./router/types";
+
+const { port, hostname } = constants;
 
 const server = http.createServer((req: RequestType, res: ResponseType) => {
-  res.setHeader('Content-Type', 'text/plain');
+  res.setHeader("Content-Type", "text/plain");
 
-  req.on('error', (err) => {
+  req.on("error", (err) => {
     console.error(err);
     res.statusCode = 500;
     res.end();
   });
-  res.on('error', (err) => {
+  res.on("error", (err) => {
     console.error(err);
   });
 
-  router(req, (statusCode = 200, end = '') => {
+  router(req, (statusCode = 200, end = "") => {
     res.statusCode = statusCode;
-    res.end(typeof end === 'string' ? end : JSON.stringify(end));
+    res.end(typeof end === "string" ? end : JSON.stringify(end));
   });
 });
 
