@@ -1,26 +1,26 @@
 import http from "http";
 
-import { MyObject } from "../types";
+import { MyObject } from "./common";
 
-export interface RequestType extends http.IncomingMessage {}
+export interface Request extends http.IncomingMessage {}
 
-export interface ResponseType extends http.ServerResponse {}
+export interface Response extends http.ServerResponse {}
 
-export interface ResponseParamsType {
+export interface ResponseParams {
   statusCode: number;
   end: string;
 }
 
-export interface RouteType {
+export interface Route {
   url: string;
   callback: CallbackType;
 }
 
-export interface RoutesType {
-  [key: string]: RouteType[];
+export interface Routes {
+  [key: string]: Route[];
 }
 
-export interface HttpMethodsType {
+export interface HttpMethods {
   [key: string]: HttpMethodType;
 }
 
@@ -29,12 +29,12 @@ export type HttpMethodType = "GET" | "POST" | "PUT" | "DELETE";
 export type GetResponseType = (status: number, end: MyObject) => void;
 
 export type CallbackType = (
-  request: RequestType,
+  request: Request,
   getResponse: GetResponseType
 ) => void;
 
 export type GetBodyType = (
-  request: RequestType,
+  request: Request,
   callback: (body: any) => void
 ) => any;
 

@@ -5,7 +5,7 @@ import {
   PGQueryType,
   PGQueryParams,
   PGQueryArgFunctionType,
-} from "../types";
+} from "_types";
 
 const pgQuery: PGQueryType = (client, { query, params, error, success }, end) =>
   error && success

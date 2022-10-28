@@ -1,4 +1,4 @@
-import { templateQueryType } from "databases/types";
+import { templateQueryType } from "_types";
 
 export const getAllUsers: templateQueryType = () => ({
   query: "SELECT * FROM users;",

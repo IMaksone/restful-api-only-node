@@ -1,6 +1,4 @@
-import bcrypt from "bcryptjs";
-
-import { GetBodyType, GetHashType } from "./types";
+import { GetBodyType } from "_types";
 
 export const getBody: GetBodyType = (request, callback) => {
   let body: any = [];
@@ -24,13 +22,3 @@ export const getBody: GetBodyType = (request, callback) => {
       callback(dataObj);
     });
 };
-
-export const getPasswordHash: GetHashType = async (password) =>
-  await bcrypt
-    .hash(password, 10)
-    .catch((err) => console.log("password hash error", err));
-
-export const getTokenHash: GetHashType = async (token) =>
-  await bcrypt
-    .hash(token, 10)
-    .catch((err) => console.log("token hash error", err));

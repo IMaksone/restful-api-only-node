@@ -11,7 +11,13 @@
     "outDir": "./build",
     "skipLibCheck": true,
     "strict": true,
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "paths": {
+      "_helper": ["helper"],     
+      "_const": ["constants"],   
+      "_db": ["databases"],
+      "_types": ["types"]
+    }
   },
   "include": ["./src"]
 }

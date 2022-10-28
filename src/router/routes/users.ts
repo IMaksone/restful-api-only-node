@@ -1,10 +1,10 @@
-import { RoutesType } from "../types";
+import { Routes } from "_types";
 import { httpMetods } from "../variables";
 
-import { rootTemplates, rootWorker } from "../../databases";
-import { getBody, getPasswordHash, getTokenHash } from "../helper";
+import { rootTemplates, rootWorker } from "_db";
+import { getBody, getPasswordHash, getTokenHash } from "_helper";
 
-const usersRotes: RoutesType = {
+const usersRotes: Routes = {
   [httpMetods.GET]: [],
   [httpMetods.POST]: [],
   [httpMetods.PUT]: [],
@@ -60,8 +60,13 @@ usersRotes.PUT.push({
       rootWorker(
         rootTemplates.updateUserPassword({ login: body.login, password }),
         {
-          error: (error) =>
-            console.log("PUT update user password error: ", error),
+          error: (error) => {
+            console.log("PUT update user password error: ", error);
+            getResponse(500, {
+              message: "Internal Server Error",
+              login: body.login,
+            });
+          },
           success: (results, fields) =>
             results.rowCount
               ? getResponse(200, {

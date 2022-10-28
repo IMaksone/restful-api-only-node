@@ -1,6 +1,6 @@
-import { RoutesType, HttpMethodsType } from "./types";
+import { Routes, HttpMethods } from "_types";
 
-export const defaultRoutes: RoutesType = {
+export const defaultRoutes: Routes = {
   GET: [
     {
       url: "/",
@@ -13,5 +13,5 @@ export const defaultRoutes: RoutesType = {
   DELETE: [],
 };
 
-export const httpMetods: HttpMethodsType = {};
+export const httpMetods: HttpMethods = {};
 Object.keys(defaultRoutes).forEach((key: any) => (httpMetods[key] = key));
